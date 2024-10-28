@@ -1,70 +1,52 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Informations Produit - Consommateur</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Informations Produit pour le Consommateur</h1>
-    <div class="info-container">
-        <div id="table-container"></div>
-        <div class="images">
-            <img id="fish-image" src="" alt="Image du Poisson" class="fish-image">
-            <img id="certification-logo" src="" alt="Logo Certification" class="certification-logo">
-        </div>
-    </div>
-    <script>
-        // Fonction pour récupérer les données JSON de l'URL
-        function getJsonFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            const data = params.get('data');
-            if (data) {
-                try {
-                    return JSON.parse(decodeURIComponent(data));
-                } catch (error) {
-                    console.error("Erreur lors du décodage JSON:", error);
-                    return null;
+<script>
+    // Fonction pour récupérer les données JSON de l'URL
+    function getJsonFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const data = params.get('data');
+        if (data) {
+            try {
+                return JSON.parse(decodeURIComponent(data));
+            } catch (error) {
+                console.error("Erreur lors du décodage JSON:", error);
+                return null;
+            }
+        }
+        console.warn("Aucune donnée trouvée dans l'URL.");
+        return null;
+    }
+
+    // Récupération des données JSON et affichage de débogage
+    const consumerInfo = getJsonFromUrl();
+    console.log("Données JSON récupérées :", consumerInfo);
+
+    // Vérifie si les données sont présentes, puis génère le tableau et affiche les images
+    if (consumerInfo) {
+        function generateTable(data) {
+            const tableContainer = document.getElementById('table-container');
+            const table = document.createElement('table');
+            
+            for (const key in data) {
+                if (key !== "lienImagePoisson" && key !== "lienLogoCertification") {
+                    const row = document.createElement('tr');
+                    const cellKey = document.createElement('th');
+                    const cellValue = document.createElement('td');
+                    
+                    cellKey.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                    cellValue.textContent = data[key];
+                    
+                    row.appendChild(cellKey);
+                    row.appendChild(cellValue);
+                    table.appendChild(row);
                 }
             }
-            console.warn("Aucune donnée trouvée dans l'URL.");
-            return null;
+            tableContainer.appendChild(table);
         }
 
-        // Récupération des données JSON et affichage de débogage
-        const consumerInfo = getJsonFromUrl();
-        console.log("Données JSON récupérées :", consumerInfo);
-
-        // Vérifie si les données sont présentes, puis génère le tableau et affiche les images
-        if (consumerInfo) {
-            function generateTable(data) {
-                const tableContainer = document.getElementById('table-container');
-                const table = document.createElement('table');
-                
-                for (const key in data) {
-                    if (key !== "lienImagePoisson" && key !== "lienLogoCertification") {
-                        const row = document.createElement('tr');
-                        const cellKey = document.createElement('th');
-                        const cellValue = document.createElement('td');
-                        
-                        cellKey.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                        cellValue.textContent = data[key];
-                        
-                        row.appendChild(cellKey);
-                        row.appendChild(cellValue);
-                        table.appendChild(row);
-                    }
-                }
-                tableContainer.appendChild(table);
-            }
-
-            // Générer le tableau et afficher les images
-            generateTable(consumerInfo);
-            document.getElementById('fish-image').src = consumerInfo.lienImagePoisson;
-            document.getElementById('certification-logo').src = consumerInfo.lienLogoCertification;
-        } else {
-            document.getElementById('table-container').textContent = "Données non disponibles.";
-        }
-    </script>
-</body>
-</html>
+        // Générer le tableau et afficher les images
+        generateTable(consumerInfo);
+        document.getElementById('fish-image').src = consumerInfo.lienImagePoisson;
+        document.getElementById('certification-logo').src = consumerInfo.lienLogoCertification;
+    } else {
+        document.getElementById('table-container').textContent = "Données non disponibles.";
+    }
+</script>
