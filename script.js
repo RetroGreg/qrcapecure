@@ -58,5 +58,5 @@ const companyUrl = `https://retrogreg.github.io/qrcapecure/entreprise.html?data=
 const qrCompany = new QRious({
     element: document.getElementById('qr-entreprise'),
     value: companyUrl,
-    size: 200,
+    size: 220,
 });
