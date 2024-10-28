@@ -8,18 +8,20 @@ const consumerInfo = {
     qualite: "Frais",
     conservation: "Entre 0-4°C",
     dlc: "20 octobre 2024",
-    lienImagePoisson: "images/thonrouge.png",
-    lienLogoCertification: "images/msc.jpg"
+    lienImagePoisson: "path/to/photo-thon.jpg",
+    lienLogoCertification: "path/to/logo-certification.png"
 };
 
+// Encodage des données JSON en URL pour le QR code consommateur
 const consumerInfoEncoded = encodeURIComponent(JSON.stringify(consumerInfo));
-const consumerUrl = `client.html?data=${consumerInfoEncoded}`;
+const consumerUrl = `https://retrogreg.github.io/qrcapecure/client.html?data=${consumerInfoEncoded}`;
 const qrConsumer = new QRious({
     element: document.getElementById('qr-consommateur'),
     value: consumerUrl,
     size: 200,
 });
 
+// Informations détaillées pour l’entreprise
 const companyDetails = {
     espece: "Thon rouge",
     numeroLot: "20241015-AB12",
@@ -46,11 +48,13 @@ const companyDetails = {
         poids: "500g"
     },
     dlc: "2024-10-20",
+    lienImagePoisson: "path/to/photo-thon.jpg",
+    lienLogoCertification: "path/to/logo-certification.png"
 };
 
-
+// Encodage des données JSON en URL pour le QR code entreprise
 const companyDetailsEncoded = encodeURIComponent(JSON.stringify(companyDetails));
-const companyUrl = `entreprise.html?data=${companyDetailsEncoded}`;
+const companyUrl = `https://retrogreg.github.io/qrcapecure/entreprise.html?data=${companyDetailsEncoded}`;
 const qrCompany = new QRious({
     element: document.getElementById('qr-entreprise'),
     value: companyUrl,
