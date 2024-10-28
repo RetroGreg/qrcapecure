@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Informations Produit - Entreprise</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Informations Produit pour l'Entreprise</h1>
+    <div class="info-container">
+        <div id="table-container"></div> <!-- Conteneur pour le tableau dynamique -->
+        <div class="images">
+            <img id="fish-image" src="" alt="Image du Poisson" class="fish-image">
+            <img id="certification-logo" src="" alt="Logo Certification" class="certification-logo">
+        </div>
+    </div>
+    <script>
+        // Fonction pour récupérer les données JSON de l'URL
+        function getJsonFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const data = params.get('data');
+            return data ? JSON.parse(decodeURIComponent(data)) : {};
+        }
+
+        // Récupération des données JSON et génération du tableau
+        const companyDetails = getJsonFromUrl();
+
+        function generateTable(data) {
+            const tableContainer = document.getElementById('table-container');
+            const table = document.createElement('table');
+            
+            for (const key in data) {
+                if (key !== "lienImagePoisson" && key !== "lienLogoCertification") {
+                    const row = document.createElement('tr');
+                    const cellKey = document.createElement('th');
+                    const cellValue = document.createElement('td');
+                    
+                    cellKey.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                    cellValue.textContent = data[key];
+                    
+                    row.appendChild(cellKey);
+                    row.appendChild(cellValue);
+                    table.appendChild(row);
+                }
+            }
+            tableContainer.appendChild(table);
+        }
+
+        // Générer le tableau et afficher les images
+        generateTable(companyDetails);
+    </script>
+</body>
+</html>
