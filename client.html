@@ -1,52 +1,57 @@
-<script>
-    // Fonction pour récupérer les données JSON de l'URL
-    function getJsonFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        const data = params.get('data');
-        if (data) {
-            try {
-                return JSON.parse(decodeURIComponent(data));
-            } catch (error) {
-                console.error("Erreur lors du décodage JSON:", error);
-                return null;
-            }
-        }
-        console.warn("Aucune donnée trouvée dans l'URL.");
-        return null;
-    }
-
-    // Récupération des données JSON et affichage de débogage
-    const consumerInfo = getJsonFromUrl();
-    console.log("Données JSON récupérées :", consumerInfo);
-
-    // Vérifie si les données sont présentes, puis génère le tableau et affiche les images
-    if (consumerInfo) {
-        function generateTable(data) {
-            const tableContainer = document.getElementById('table-container');
-            const table = document.createElement('table');
-            
-            for (const key in data) {
-                if (key !== "lienImagePoisson" && key !== "lienLogoCertification") {
-                    const row = document.createElement('tr');
-                    const cellKey = document.createElement('th');
-                    const cellValue = document.createElement('td');
-                    
-                    cellKey.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-                    cellValue.textContent = data[key];
-                    
-                    row.appendChild(cellKey);
-                    row.appendChild(cellValue);
-                    table.appendChild(row);
-                }
-            }
-            tableContainer.appendChild(table);
-        }
-
-        // Générer le tableau et afficher les images
-        generateTable(consumerInfo);
-        document.getElementById('fish-image').src = consumerInfo.lienImagePoisson;
-        document.getElementById('certification-logo').src = consumerInfo.lienLogoCertification;
-    } else {
-        document.getElementById('table-container').textContent = "Données non disponibles.";
-    }
-</script>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Informations Produit - Consommateur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Informations Produit pour le Consommateur</h1>
+    <div class="info-container">
+        <table>
+            <tr>
+                <th>Espèce</th>
+                <td>Thon rouge</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <img src="path/to/photo-thon.jpg" alt="Image du Thon Rouge" class="fish-image">
+                </td>
+            </tr>
+            <tr>
+                <th>Lieu de Pêche</th>
+                <td>Atlantique Nord</td>
+            </tr>
+            <tr>
+                <th>Date de Pêche</th>
+                <td>15 octobre 2024</td>
+            </tr>
+            <tr>
+                <th>Méthode de Pêche</th>
+                <td>Pêche durable</td>
+            </tr>
+            <tr>
+                <th>Certification</th>
+                <td>MSC</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <img src="path/to/logo-certification.png" alt="Logo Certification" class="certification-logo">
+                </td>
+            </tr>
+            <tr>
+                <th>Qualité</th>
+                <td>Frais</td>
+            </tr>
+            <tr>
+                <th>Conservation</th>
+                <td>Entre 0-4°C</td>
+            </tr>
+            <tr>
+                <th>Date Limite de Consommation</th>
+                <td>20 octobre 2024</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
