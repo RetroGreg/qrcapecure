@@ -61,7 +61,7 @@ const qrConsumer = new QRious({
  * @property {string} lienLogoCertification - Lien vers le logo de certification
  */
 const companyDetails = {
-  espece: "Thon rouge",
+  espece: "Saumon",
   numeroLot: "20241015-AB12",
   dateHeureCapture: "2024-10-15T08:30:00Z",
   coordonneesGPS: { lat: 45.678, lon: -23.456 },
@@ -86,7 +86,7 @@ const companyDetails = {
     poids: "500g",
   },
   dlc: "2024-10-20",
-  lienImagePoisson: "path/to/photo-thon.jpg",
+  lienImagePoisson: "images/saumon.png",
   lienLogoCertification: "path/to/logo-certification.png",
 };
 
